@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework #01</title>
+
+    <!-- Add script. -->
+    <script src="script.js"></script>
+    <!-- Add styles. -->
+    <link type="text/css" rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>  <!-- Header is just for styling. --> </header>
+        <p id="introduction"> <!-- Text content will be added here in the JavaScript below! --> </p>
+
+        <script>   
+            // Create introduction using variables defined in script.js.
+            let introduction = 
+            "Hi! My name is " + first_name + " " + last_name + ". " +
+            "I have been at SCC for " + years_of_study + " so far, and I hope to " + goal + " after completing my courses!";
+
+            // Add introduction to document.
+            document.getElementById("introduction").innerHTML = introduction;
+        </script>
+    </div> <!-- End "wrapper". -->
+</body>
+
+</html>
