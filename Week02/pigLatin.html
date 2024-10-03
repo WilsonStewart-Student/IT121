@@ -29,25 +29,24 @@ Date: 10/02/24
             // Take the inputted phrase and split it into an array containing each word entered, separated by spaces.
             phrase_array = phrase.split(" ");
 
+            var usable_phrase = false; 
             // Check to make sure the array has at least one translation-length word in it.
             for (let word = 0; word <= (phrase_array.length - 1); word++)
             {
-                var usable_phrase = false; 
 
                 if (usable_phrase == false)
                 {
                     if (phrase_array[word].length > 1)
                     {
                         usable_phrase = true;
+                        console.log("you can use this phrase yay");
+                        console.log(phrase.replace(/[^A-Za-z]*\s*/g, '').length);
                     }
                 } 
             }
 
-            console.log(phrase.replace(/[A-Za-z]*\s*/g, '').length);
-            console.log("leftover: " + phrase.replace(/[^A-Za-z]*\s*/g, ''));
-
             // Check if user has either only entered a single letter, only spaces, only non-latin characters, or no translation-length words.
-            if (phrase.length < 2 || phrase.replace(/\s/g, '').length == 0 || phrase.replace(/[^A-Za-z]*\s*/g, '').length == 0 || phrase == null || usable_phrase == false)
+            if (phrase.length < 2 || phrase.replace(/[^A-Za-z]*\s*/g, '').length == 0 || phrase == null || usable_phrase == false)
             {
                 warning = "Inputted text was not translateable. Please make sure your input has at least one word written in latin characters longer than one letter!"
             }
