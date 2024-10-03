@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pig Latin Translator</title>
+
+    <link type="text/css" rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <header></header>
+        <script>
+            // Prompt the user to input a phrase.
+            phrase = prompt("Enter a phrase!");
+            document.write("<p> <b>You entered:</b> \"", phrase, "\"</p>");
+
+            // Your pig-latin translation code here:
+
+            // Initialize warning for phrases that will have translation issues.
+            var warning = "";
+
+            // Take the inputted phrase and split it into an array containing each word entered, separated by spaces.
+            phrase_array = phrase.split(" ");
+
+            // Check to make sure the array has at least one translation-length word in it.
+            for (let word = 0; word <= (phrase_array.length - 1); word++)
+            {
+                var usable_phrase = false; 
+
+                if (usable_phrase == false)
+                {
+                    if (phrase_array[word].length > 1)
+                    {
+                        usable_phrase = true;
+                    }
+                } 
+            }
+
+            console.log(phrase.replace(/[A-Za-z]*\s*/g, '').length);
+            console.log("leftover: " + phrase.replace(/[^A-Za-z]*\s*/g, ''));
+
+            // Check if user has either only entered a single letter, only spaces, only non-latin characters, or no translation-length words.
+            if (phrase.length < 2 || phrase.replace(/\s/g, '').length == 0 || phrase.replace(/[^A-Za-z]*\s*/g, '').length == 0 || phrase == null || usable_phrase == false)
+            {
+                warning = "Inputted text was not translateable. Please make sure your input has at least one word written in latin characters longer than one letter!"
+            }
+            
+
+            // Otherwise, proceed to translation.
+            else
+            {
+                // Take each word in the phrase and convert it to pig latin.
+                for (let word = 0; word <= (phrase_array.length - 1); word++)
+                {
+                    // Initialize regex to check for consonants and vowels. (If this looks bad it's because I don't really know how to write regex. But it works!)
+                    let vowels = /[aeiouAEIOU]/g;
+                    let consonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g;
+
+                    // Initialize a variable to tell the program whether or not to keep checking what kind of word it has.
+                    let keep_checking = true;
+
+                    if (phrase_array[word].length > 1)
+                    {  
+                        // Assign the first two letters in each word to first_letters.
+                        let first_letters = phrase_array[word].substring(0, 2);
+                        console.log(first_letters);
+
+                        // If the word begins with TWO consonants, move both consonants to the end and append "ay" after them.
+                        if (first_letters.match(consonants) != null && first_letters.match(consonants).length == 2)
+                        {
+                            phrase_array[word] = phrase_array[word].substring(2) + first_letters + "ay";
+                            keep_checking = false;
+                        }
+                        else
+                        {
+                            // If the word didn't begin with two consonants, first_letters is reduced to the first letter only.
+                            first_letters = first_letters.substring(0, 1);
+
+                            // If the word begins with ONE consonant, move it to the end and append "ay" after it.
+                            if (first_letters.match(consonants) && keep_checking)
+                            {
+                                phrase_array[word] = phrase_array[word].substring(1) + first_letters + "ay";
+                                keep_checking = false;
+                            }
+
+                            // Else if the word begins with a vowel, append "way" to the end of the word.
+                            else if (first_letters.match(vowels) && keep_checking)
+                            {
+                                phrase_array[word] = phrase_array[word] + "way";
+                                keep_checking = false;
+                            }
+
+                            // If all of these checks fail, update the warning to inform the user part of their phrase was unable to be translated.
+                            else if (keep_checking)
+                            {
+                                warning = "WARNING: Unrecognized characters detected! Some parts of your phrase could not be translated!";
+                            }
+                        }
+                    }
+                }
+
+                // Clear the phrase variable, and reassign it to the translated phrase.
+                phrase = "";
+                for (let word = 0; word <= (phrase_array.length - 1); word++)
+                { 
+                    if (word == 0)
+                    {
+                        phrase = phrase + phrase_array[word];
+                    }
+                    else
+                    {
+                        phrase = phrase + " " + phrase_array[word];
+                    }
+                }
+
+                // Display the translated phrase on the webpage.
+                document.write("<p> <b>Translated phrase:</b> \"", phrase, "\"</p>");
+            }
+            // Display the warning (if it was given a value) on the webpage.
+            if (warning != "")
+            {
+                document.write("<p id='warning'>", warning, "</p>");
+            }
+        </script>
+    </div> <!-- End "wrapper". -->
+</body>
+
+</html>
