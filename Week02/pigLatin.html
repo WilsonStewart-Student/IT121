@@ -39,8 +39,6 @@ Date: 10/02/24
                     if (phrase_array[word].length > 1)
                     {
                         usable_phrase = true;
-                        console.log("you can use this phrase yay");
-                        console.log(phrase.replace(/[^A-Za-z]*\s*/g, '').length);
                     }
                 } 
             }
@@ -69,7 +67,6 @@ Date: 10/02/24
                     {  
                         // Assign the first two letters in each word to first_letters.
                         let first_letters = phrase_array[word].substring(0, 2);
-                        console.log(first_letters);
 
                         // If the word begins with TWO consonants, move both consonants to the end and append "ay" after them.
                         if (first_letters.match(consonants) != null && first_letters.match(consonants).length == 2)
