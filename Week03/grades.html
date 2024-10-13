@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Grades</title>
+</head>
+
+<style>
+    /* EVEN LAZIERRR styles because. I was way too busy this week. Also this isn't a CSS class. :P */
+    #wrapper
+    {
+        width: max-content;
+        margin: 30px auto;
+        padding: 10px 50px;
+
+        text-align: center;
+
+        background-color: lightgray;
+    }
+
+    table
+    {
+        margin: 0 auto;
+
+        background-color: white;
+    }
+    table, th, td 
+    {
+    border: 1px solid;
+    }
+    tr > *
+    {
+        padding: 2.5px;
+    }
+</style>
+
+<body>
+
+<div id="wrapper">
+    <table id="grades_table">
+        <tbody id="grades_table">
+            <tr> <th> Name </th> <th> Grade</th></tr>
+            <!-- Filled out by JS below. -->
+        </tbody>
+    </table>
+
+    <script>
+        // GET REQUIRED VARIABLES: 
+
+        // Initialize grades as a string.
+        const grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+        // Convert grades string into an array, where each index in the array contains a student and their grade.
+        var grades_array = grades.split(", ");
+
+        for (let i = 0; i < grades_array.length; i++) 
+        { 
+            // Further separate each index in the array into its own array, where the first index is the student's name and the second is their grade.
+            grades_array[i] = grades_array[i].split("|");
+
+            // Also, capitalise the first letter in each student's name.
+            grades_array[i][0] = grades_array[i][0].charAt(0).toUpperCase() + grades_array[i][0].slice(1);
+        }
+
+        // Initialize variables for minimum, maximum, and average grades.
+        var grade_avg = 0;
+        var grade_max = 0;
+        var grade_min = 0;
+
+
+        // Create a separate array with just the number grades from the grades_array.
+        var grade_numbers = [];
+        for (let i = 0; i < grades_array.length; i++) 
+        {
+            grade_numbers.push(grades_array[i][1]);
+        }
+
+        // Get the average of the grades and assign it to grade_avg.
+        var grade_avg = 0;
+        for (let i = 0; i < grade_numbers.length; i++) 
+        {
+            grade_avg += parseInt(grade_numbers[i]);
+            // console.log(grade_sum);
+        }
+        grade_avg = grade_avg / grade_numbers.length;
+
+        // Get the minimum and maximum of the grades and assign them to their respective variables.
+        grade_max = Math.max.apply(Math, grade_numbers);
+        grade_min = Math.min.apply(Math, grade_numbers);
+
+
+        // Alphabetize the grades by first name.
+        let grades_array_alphabetical = grades_array.sort();
+
+
+
+
+
+
+        // DISPLAY REQUIRED VARIABLES:
+
+        // >>> Make a table displaying each grade and who it is assigned to.
+        for (let i = 0; i < grades_array_alphabetical.length; i++)
+        {
+            var tr_grades = document.createElement('tr'); 
+            tr_grades.setAttribute("id", i);
+
+            document.getElementById("grades_table").appendChild(tr_grades);
+
+            for (let ii = 0; ii < 2; ii++) 
+            {
+                var td_grade = document.createElement('td'); 
+                td_grade.innerHTML = grades_array_alphabetical[i][ii];
+
+                document.getElementById(i).appendChild(td_grade);
+            }
+        }
+
+        document.write("<p> <b>TOTAL STUDENTS:</b> ", grades_array_alphabetical.length, "</p>");
+        document.write("<p> <b>AVERAGE GRADE:</b> ", grade_avg, "</p>");
+        document.write("<p> <b>LOWEST GRADE:</b> ", grade_min, "</p>");
+        document.write("<p> <b>HIGHEST GRADE:</b> ", grade_max, "</p>");
+        document.write("<p> I hope these aren't out of 100...! </p>");
+    </script>
+</div> <!-- End "wrapper". -->
+
+</body>
+</html>
