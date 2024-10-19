@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js"> </script> -->
+</head>
+
+<style>
+    *
+    {
+        margin: 0;
+        padding: 0;
+    }
+    #wrapper
+    {
+        padding: 10px;
+        margin: 20px;
+
+        background-color:lightgray;
+    }
+    label
+    {
+        width: 80px;
+        padding-bottom: 5px;
+        display: inline-block;
+    }
+    button
+    {
+        margin-bottom: 5px;
+        padding: 2.5px;
+    }
+
+    /* Error Messages: */
+    span > *
+    {
+        color: red;
+        font-style: italic;
+        padding-bottom: 5px;
+    }
+    #message
+    {
+        padding-top: 5px;
+    }
+</style>
+
+<body>
+    <div id="wrapper">
+    <h1>Functions & Validation</h1>
+
+    <form id="form" action="#" onsubmit="return validateForm(this);">
+
+        <label for="firstName"> First Name: </label> <input type="text" name="firstName" required>
+        <br>
+        <label for="lastName"> Last Name: </label> <input type="text" name="lastName" required>
+        <br>
+        <span id="nameErrors"> </span>
+
+        <label for="password"> Password: </label> <input type="text" name="password" required>
+        <br>
+        <span id="passwordErrors"> </span>
+        
+        <button> Check </button>
+
+    </form>
+
+    <hr>
+
+    <div id="message"></div>
+
+    <script>
+        function validateForm(myForm)
+        {
+            // validatePassword returns an array of any issues with the user's password, which is assigned to passwordErrors.
+            let passwordErrors = validatePassword(myForm);
+            // validatePassword returns an array of any issues with the user's name, which is assigned to nameErrors.
+            let nameErrors = validateNames(myForm);
+
+            // If any errors were found in the validation process, display them on the form.
+            document.getElementById("nameErrors").innerHTML = "";
+            for (let i = 0; i < nameErrors.length; i++)
+            {
+                document.getElementById("nameErrors").innerHTML += "<p>" + nameErrors[i] + "</p>";
+            }
+
+            document.getElementById("passwordErrors").innerHTML = "";
+            for (let i = 0; i < passwordErrors.length; i++)
+            {
+                document.getElementById("passwordErrors").innerHTML += "<p>" + passwordErrors[i] + "</p>";
+            }
+
+            if (passwordErrors.length > 0 || nameErrors.length > 0)
+            {
+                document.getElementById("message").innerHTML = "Form submit unsuccessful. Please review errors.";
+                return false; // Prevents page reload.
+            }
+            else if (passwordErrors.length == 0 && nameErrors.length == 0)
+            {
+                alert("Form entry success!"); // Pauses page reload until "ok" is clicked. I tried messing around with using setTimeout
+                // to pause the reload and allow a message to be displayed that way, but it wasn't working out. I guess it's really
+                // only about aesthetics though, since a server would be needed for an actual "successful form submission". 
+                return true;
+            }
+        }
+
+        function validatePassword(myForm)
+        {
+            let userPassword = myForm.password.value
+            let passwordErrors = [];
+
+            // Valid passwords should have:
+            // - at least 8 characters,
+            // - one uppercase letter, and
+            // - one lowercase letter.
+
+            // Check if password contains spaces. (Since it could trick the length requirement & spaces are annoying.)
+            if (userPassword.length > userPassword.replace(/\s/g,'').length)
+            {
+                passwordErrors.push("Password must not contain spaces.")
+            }
+
+            // Check if password fails to be 8 characters or more in length.
+            if (userPassword.length < 8)
+            {
+                passwordErrors.push("Password must not be less than 8 characters.")
+            }
+
+            // Check if password fails to contain any lowercase latin characters.
+            if (!userPassword.match(/[a-z]/g))
+            {
+                passwordErrors.push("Password must contain at least one lowercase letter.")
+            }
+
+            // Check if password fails to contain any uppercase latin characters.
+            if (!userPassword.match(/[A-Z]/g))
+            {
+                passwordErrors.push("Password must contain at least one uppercase letter.")
+            }
+
+            return passwordErrors;
+        }
+
+        function validateNames(myForm)
+        {
+            let firstName = myForm.firstName.value;
+            let lastName = myForm.lastName.value;
+            let nameErrors = [];
+
+            // Check that first and last names don't contain 0 actual characters.
+            if (firstName.replace(/\s/g,'').length == 0)
+            {
+                nameErrors.push("First name cannot be empty!")
+            }
+            if (lastName.replace(/\s/g,'').length == 0)
+            {
+                nameErrors.push("Last name cannot be empty!")
+            }
+
+            return nameErrors;
+        }
+    </script>
+
+    </div>
+</body>
+</html> 
