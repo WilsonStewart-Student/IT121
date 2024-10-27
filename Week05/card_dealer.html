@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        *
+        {
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper
+        {
+            padding: 10px;
+            margin: 20px;
+    
+            background-color:lightgray;
+        }
+        label
+        {
+            width: 80px;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+        button
+        {
+            margin-bottom: 5px;
+            padding: 2.5px;
+        }
+        hr
+        {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+    <h1>Robo Dealer</h1>
+    <button onclick="dealHand();">Deal Hand</button>
+    <hr>
+    <div id="card_hand"></div>
+    </div> <!-- End "wrapper". -->
+
+    <!-- Create Deck: -->
+    <script>
+        // Create an array of card suits.
+        const suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
+
+        // Initialize an array to hold all card objects.
+        var deckOfCards = [];
+
+        // Function to create card with value and suit arguments, then add it to the deck.
+        function createCard(value, suit)
+        {
+            this.value = value;
+            this.suit = suit;
+
+            deckOfCards.push(this);
+        }
+        // Loop that uses the previous function to generate all 52 cards in a standard deck.
+        // Note that value 1 is actually "Ace", and values 11, 12, and 13 are actually "King", "Queen", and "Jack", 
+        for (let value = 1; value <= 13; value++)
+        {
+            for (const suit of suits) 
+            {
+                new createCard(value, suit);
+            }
+        }
+    </script>
+
+    <!-- Deal Hand: -->
+    <script>
+        function dealHand()
+        {
+            // Reset the contents of the card hand on the page.
+            document.getElementById("card_hand").innerHTML = "";
+
+            // Initialize an array to hold the player's hand of cards.
+            var handOfCards = [];
+
+            // Loop to grab five cards from the deck and add them to the player's hand.
+            for (let card = 1; card <= 5; card++)
+            {
+                let selectedCard = Math.floor(Math.random() * (deckOfCards.length - 1));
+                handOfCards.push(deckOfCards[selectedCard]);
+                deckOfCards.splice(selectedCard, 1);
+            }
+
+            // Initialize a string to contain a list of the player's hand of cards.
+            var cardString = "";
+
+            // Generate the contents of the above string.
+            for (card of handOfCards)
+            {
+                cardString += "<p>";
+                    
+                if (card.value == 1)
+                {
+                    cardString += ("Ace of ")
+                }
+                else if (card.value >= 2 && card.value <= 10)
+                {
+                    cardString += (card.value + " of ");
+                }
+                else if (card.value == 11)
+                {
+                    cardString += ("King of ")
+                }
+                else if (card.value == 12)
+                {
+                    cardString += ("Queen of ")
+                }
+                else if (card.value == 13)
+                {
+                    cardString += ("Jack of ")
+                }
+
+                cardString += card.suit
+
+                cardString += "</p>";
+            }
+
+            // Display the player's hand of cards on the webpage.
+            document.getElementById("card_hand").innerHTML += cardString;
+
+            // Add the player's cards back to the deck to refill it, so the function can be run again.
+            deckOfCards = deckOfCards.concat(handOfCards);
+        }
+    </script>
+
+</body>
+
+</html>
