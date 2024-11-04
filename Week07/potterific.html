@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <script
+                src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+                crossorigin="anonymous"></script>
+    </head>
+    <style>
+        .over {
+            background-color: orange;
+        }
+        .selected {
+            background-color: green;
+        }
+
+        .invisible
+        {
+            display: none;
+        }
+    </style>
+
+    <body>
+        <div id="buttons">
+        </div>
+
+        <table border='1'>
+            <tr>
+                <th>name</th>
+                <th>role</th>
+                <th>house</th>
+                <th>gender</th>
+                <th>alignment</th>
+            </tr>
+        </table>
+        <button onclick="resetTable()">reset</button>
+    </body>
+        
+        <script>
+        // list of characters
+        let characters = [
+        {name:"Albus Dumbledore", role:"staff", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Nymphadora Tonks", role:"", house:"Hufflepuff",gender:"f",alignment:"good"},    
+        {name:"Ron Weasley", role:"student", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Ginny Weasley", role:"student", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Hermione Granger", role:"student", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Mad-eye Moody", role:"staff", house:"",gender:"m",alignment:"good"},    
+        {name:"Prof McGonagall", role:"staff", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Harry Potter", role:"student", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Draco Malfoy", role:"student", house:"Slytherin",gender:"m",alignment:"evil"},    
+        {name:"Hagrid", role:"staff", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Luna Lovegood", role:"student", house:"Ravenclaw",gender:"f",alignment:"good"},    
+        {name:"Voldemort", role:"", house:"Slytherin",gender:"m",alignment:"evil"},    
+        {name:"Bellatrix Lestrange", role:"", house:"Slytherin",gender:"f",alignment:"evil"},           
+        {name:"Severus Snape", role:"staff", house:"Slytherin",gender:"m",alignment:"?"}
+        ];
+
+
+
+        $(document).ready(function(){
+
+            // Find all houses and add them to an array.
+            let houses = characters.map((character) => character.house);
+            console.log(houses)
+            // Remove all non-unique values in "houses" array.
+            houses = [...new Set(houses)];
+            console.log(houses)
+            // ...And also remove the empty "house".
+            houses.splice(houses.indexOf(""), 1);
+
+            // Generate buttons based on houses.
+            for (house of houses)
+            {
+                $("#buttons").append("<button onclick=\"sortBy(this)\">" + house + "</button>")
+            }
+
+
+
+            // Create initial table.
+            for (character of characters)
+            {
+                // Create a table row for the character.
+                let tr = document.createElement('tr');
+                // Set the table row's ID to the character's name. Use an underscore instead of spaces to avoid broken IDs.
+                tr.setAttribute("id", (character.name).replace(" ", "_"));
+                // Set the table row's class to the character's properties.
+                tr.setAttribute("class", character.role + " " + character.house + " " + character.gender + " " + character.alignment);
+
+                // Add the table row to the table.
+                $("table").append(tr);
+
+                // Create table data elements with the characters' names and properties.
+                for (property in character)
+                {
+                    let td = document.createElement('td');
+                    td.innerHTML = character[property];
+                
+                // And append them to the appropriate table row.
+                    $("#" + (character.name).replace(" ", "_")).append(td);
+                }
+            }
+            styleRows();
+        });
+
+
+
+        // Show or hide table rows based on the property value name on the button clicked.
+        function sortBy(property)
+        {
+            $("tr." + property.innerText).removeClass("invisible");
+            $("tr:not(." + property.innerText + ", tr:first-of-type)").addClass("invisible");
+
+            styleRows();
+        }
+
+
+
+        // Reset the table.
+        function resetTable()
+        {
+            $("tr").removeClass("invisible");
+
+            styleRows();
+        }
+
+
+
+        // Color the table rows. Make sure all odd rows displayed rows are yellow!
+        function styleRows()
+        {
+            $("tr:not(.invisible):even").css("background-color", "");
+            $("tr:not(.invisible):odd").css("background-color", "yellow");
+        }
+        </script>
+</html>
