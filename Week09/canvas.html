@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+
+    <style>
+        body
+        {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<!-- Realistically not optimized codewise because I am doing this very last minute. Lots of crazy stuff this week. 3__3 It turned out cute though! It's the prince from the Katamari series. -->
+
+<body>
+    <canvas height="512" width="512"></canvas>
+
+    <script>
+        let cvs = document.querySelector("canvas");
+        let ctx = cvs.getContext('2d');
+
+        // Draw the background.
+            ctx.beginPath();
+
+            ctx.fillStyle = "blue";
+            ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+            ctx.closePath();
+        //
+
+        // Make it so that (0, 0) is the middle of the canvas.
+            ctx.translate(cvs.width/2, cvs.height/2);
+        //
+
+        // Draw rainbow. (FIX: Put a loop OML.)
+            ctx.beginPath();
+            ctx.arc(0, 60, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#fe0000";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(0, 80, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#fc7e00";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(0, 100, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#fefe00";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(0, 120, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#03fe57";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(0, 140, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#5669f6";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(0, 160, 300, 0, 2 * Math.PI);
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.fillStyle = "blue";
+            ctx.fillRect(-256, 256, 512, -100);
+            ctx.closePath();
+            
+        //
+
+        // Draw the body.
+            ctx.beginPath();
+
+            ctx.moveTo(-40, 75);
+            ctx.lineTo(-75, 256); 
+            ctx.lineTo(75, 256); 
+            ctx.lineTo(40, 75);
+
+            ctx.strokeStyle = "#80bc3a";
+            ctx.stroke();
+
+            ctx.fillStyle = "#80bc3a";
+            ctx.fill();
+
+            ctx.closePath();
+        //
+
+        // Draw the antenna.
+            ctx.beginPath();
+
+            ctx.moveTo(-20, -35);
+            ctx.lineTo(0, -160); 
+            ctx.lineTo(20, -35); 
+
+            ctx.fillStyle = '#e7ca47';
+            ctx.fill();
+
+            ctx.closePath(); 
+
+            ctx.beginPath();
+
+            ctx.arc(0, -160, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = "#a82329";
+            ctx.fill();
+
+            ctx.closePath();
+        //
+
+        // Draw the head.
+            ctx.beginPath();
+
+            ctx.roundRect(-200, -80, 400, 160, 60) // roundRect(startX, startY, width, height, radii)
+            ctx.clip();
+
+            ctx.fillStyle = '#80bc3a';
+            ctx.fill();
+
+            ctx.fillStyle = "#add14a";
+            ctx.fillRect(125, -80, 100, 160);
+            ctx.fillRect(-125, -80, -100, 160);
+
+            ctx.fillStyle = "#4c9e3a";
+            ctx.fillRect(150, -80, 100, 160);
+            ctx.fillRect(-150, -80, -100, 160);
+
+            ctx.fillStyle = "#3b9445";
+            ctx.fillRect(175, -80, 100, 160);
+            ctx.fillRect(-175, -80, -100, 160);
+
+            ctx.closePath();
+        //
+
+        // Draw the face.
+            ctx.beginPath();
+
+            ctx.rect(-80, -50, 160, 100); // rect(startX, startY, width, height)
+            ctx.fillStyle = '#efccb5';
+            ctx.fill();
+
+            ctx.strokeStyle = "#e7ca47";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+
+            ctx.closePath();
+        //
+
+        // Draw the nose.
+            ctx.beginPath();
+
+            ctx.moveTo(0, 0);  
+            ctx.lineTo(-5, 15); 
+            ctx.lineTo(5, 15); 
+            ctx.lineTo(0, 0); 
+
+            ctx.fillStyle = "#e15a27";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#e15a27";
+            ctx.stroke(); 
+
+            ctx.closePath();
+        //
+
+        // Draw the mouth.
+            ctx.beginPath();
+
+            ctx.moveTo(0, 25);  
+            ctx.lineTo(-10, 25); 
+            ctx.lineTo(-7, 35); 
+            ctx.lineTo(7, 35); 
+            ctx.lineTo(10, 25); 
+            ctx.lineTo(-10, 25); 
+
+            ctx.fillStyle = "#a82329";
+            ctx.fill();
+
+            ctx.closePath();
+        //
+
+        // Draw the eyes.
+            ctx.beginPath();
+
+            ctx.arc(50, 0, 5, 0, 2 * Math.PI);
+            ctx.arc(-50, 0, 5, 0, 2 * Math.PI);
+
+            ctx.fillStyle = "black";
+            ctx.fill();
+
+            ctx.closePath();
+        //
+        
+
+
+    </script>
+
+</body>
+
+</html>
