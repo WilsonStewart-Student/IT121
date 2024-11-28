@@ -1,0 +1,10 @@
+{
+  "name": "hw_10",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "HW #10",
+  "main": "index.js",
+  "author": "Wilson Stewart",
+  "homepage": "https://github.com/WilsonStewart-Student/IT121",
+  "license": "ISC"
+}
